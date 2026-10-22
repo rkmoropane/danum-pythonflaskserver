@@ -62,9 +62,9 @@ The terminal should open in the current working directory with the project and K
 
 Use the following command to display the applications currently deployed in your Code Engine project.
 
-"```
+```
 ibmcloud ce app list
-```"
+```
 
 This helps you identify existing applications and avoid naming conflicts.
 
@@ -74,15 +74,14 @@ This helps you identify existing applications and avoid naming conflicts.
 
 Clone the lab's GitHub repository.
 
-"```
+```
 git clone https://github.com/ibm-developer-skills-network/danum-pythonflaskserver
-```"
-
+```
 Navigate to the cloned project directory.
 
-"```
+```
 cd danum-pythonflaskserver
-```"
+```
 
 The repository contains the Python Flask application that will be packaged into a Docker image.
 
@@ -92,9 +91,9 @@ The repository contains the Python Flask application that will be packaged into 
 
 Build the Docker image and tag it with the IBM Cloud Container Registry namespace provided by the lab environment.
 
-"```
+```
 docker build . -t us.icr.io/${SN_ICR_NAMESPACE}/helloworld2
-```"
+```
 
 ### Understanding the command
 
@@ -114,10 +113,9 @@ docker build . -t us.icr.io/${SN_ICR_NAMESPACE}/helloworld2
 
 Upload the built image to the registry so Code Engine can access it.
 
-"```
+```
 docker push us.icr.io/${SN_ICR_NAMESPACE}/helloworld2
-```"
-
+```
 Once the push completes successfully, the image is available in the registry namespace.
 
 ---
@@ -126,9 +124,9 @@ Once the push completes successfully, the image is available in the registry nam
 
 Create the Code Engine application using the Docker image you just pushed.
 
-"```
+```
 ibmcloud ce application create --name helloworld2 --image us.icr.io/${SN_ICR_NAMESPACE}/helloworld2 --registry-secret icr-secret --port 5000
-```"
+```
 
 ### Understanding the command
 
@@ -158,9 +156,9 @@ The application serves its response through the root endpoint (`/`).
 
 ### Expected result
 
-"```
+```
 Hello World
-```"
+```
 
 If the application responds successfully, your first Dockerised Python application has been deployed to IBM Cloud Code Engine.
 
@@ -174,21 +172,21 @@ In this exercise, you will change the application's response and redeploy the up
 
 Open the following file in the lab's file editor:
 
-"```
+```
 danum-pythonflaskserver/app.py
-```"
+```
 
 Find the existing message:
 
-"```
+```
 Hello World
-```"
+```
 
 Change it to:
 
-"```
+```
 Hello yourname!
-```"
+```
 
 Replace `yourname` with your preferred name.
 
@@ -198,25 +196,25 @@ Save the file.
 
 Since the application source code has changed, rebuild the image using the same name and tag.
 
-"```
+```
 docker build . -t us.icr.io/${SN_ICR_NAMESPACE}/helloworld2
-```"
+```
 
 ### Step 3: Push the updated image
 
 Push the rebuilt image to the registry.
 
-"```
+```
 docker push us.icr.io/${SN_ICR_NAMESPACE}/helloworld2
-```"
+```
 
 ### Step 4: Update the existing Code Engine application
 
 Run the following command to update the application with the rebuilt image.
 
-"```
+```
 ibmcloud ce application update --name helloworld2 --image us.icr.io/${SN_ICR_NAMESPACE}/helloworld2 --registry-secret icr-secret --port 5000
-```"
+```
 
 This updates the existing application rather than creating a second application with the same name.
 
@@ -228,9 +226,9 @@ This updates the existing application rather than creating a second application 
 
 **Expected response:**
 
-"```
+```
 Hello yourname!
-```"
+```
 
 If the updated response does not appear immediately, check the deployment status and allow the new application revision to become ready before testing again.
 
@@ -255,7 +253,7 @@ If the updated response does not appear immediately, check the deployment status
 
 The complete workflow is:
 
-"```
+```
 Clone repository
       ↓
 Build Docker image
@@ -273,7 +271,7 @@ Rebuild and push updated image
 Update existing application
       ↓
 Verify the new response
-```"
+```
 
 ---
 
